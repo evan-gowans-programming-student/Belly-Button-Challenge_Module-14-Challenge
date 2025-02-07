@@ -1,22 +1,23 @@
 // Build the metadata panel
 function buildMetadata(sample) {
-  d3.json("https://static.bc-edx.com/data/dl-1-2/m14/lms/starter/samples.json").then((data) => {
-
-    // get the metadata field
-
+  d3.json("https://evan-gowans-programming-student.github.io/Belly-Button-Challenge_Module-14-Challenge/samples.json").then((data) => {
+    // Get the metadata field
+    let metadata = data.metadata;
 
     // Filter the metadata for the object with the desired sample number
-
+    let resultArray = metadata.filter(sampleObj => sampleObj.id === parseInt(sample));
+    let result = resultArray[0]; // Get the first matching sample
 
     // Use d3 to select the panel with id of `#sample-metadata`
+    let panel = d3.select("#sample-metadata");
 
+    // Use `.html("")` to clear any existing metadata
+    panel.html("");
 
-    // Use `.html("") to clear any existing metadata
-
-
-    // Inside a loop, you will need to use d3 to append new
-    // tags for each key-value in the filtered metadata.
-
+    // Loop through each key-value pair and display it
+    Object.entries(result).forEach(([key, value]) => {
+      panel.append("h6").text(`${key}: ${value}`);
+    });
   });
 }
 
